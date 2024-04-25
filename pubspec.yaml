@@ -1,0 +1,71 @@
+name: blyss
+description: "A Better Shopping Experience."
+
+# Prevent accidental publishing to pub.dev.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0-120.0.dev <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  badges: ^3.1.2
+  provider: ^6.1.2
+  shared_preferences: ^2.2.3
+  qr_code_scanner: ^1.0.1
+  ar_flutter_plugin_flutterflow: ^0.7.46
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/blyss_logo.png"
+  adaptive_icon_background: "#FFFFFF"
+  web:
+    generate: true
+    image_path: "assets/images/blyss_logo.png"
+    background_color: "#FFFFFF"
+    theme_color: "#FFFFFF"
+
+
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Enable generation of localized Strings from arb files.
+  generate: true
+
+  assets:
+    # Add assets from the images directory to the application.
+    - assets/images/
+    - assets/images/getting_started/
+    - assets/images/products/
+    - assets/models/
+    - assets/models/Chicken_01/
+    - assets/models/gucci_seal_teddy/
+    - assets/models/deluxe_energy_elixir/
+    - assets/models/chair/
+    - assets/models/premium_ball_valve/
+    - assets/models/supreme_porsche_model/
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Medium.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
+
+    - family: blyssIcons
+      fonts:
+        - asset: assets/fonts/blyssIcons.ttf
