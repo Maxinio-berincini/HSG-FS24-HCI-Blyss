@@ -12,6 +12,7 @@ class BlyssIcons {
 
   static const String _fontFamily = 'blyssIcons';
 
+  static const IconData pc_error = IconData(0xe912, fontFamily: _fontFamily);
   static const IconData arrowbackward = IconData(0xe90d, fontFamily: _fontFamily);
   static const IconData gearshape2 = IconData(0xe90e, fontFamily: _fontFamily);
   static const IconData gearshape = IconData(0xe90f, fontFamily: _fontFamily);

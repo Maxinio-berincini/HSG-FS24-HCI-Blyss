@@ -12,9 +12,11 @@ import 'package:ar_flutter_plugin_flutterflow/widgets/ar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 import '../catalog/product.dart';
 import '../helper/blyssIcons_icons.dart';
+import '../helper/colors.dart';
+import '../helper/text_styles.dart';
 
 class ARModelViewer extends StatefulWidget {
   final Product product;
@@ -46,9 +48,40 @@ class _ARModelViewerState extends State<ARModelViewer> {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarIconBrightness: Brightness.light,
     ));
+    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       body: Stack(
         children: [
+          if(kIsWeb)
+            Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          BlyssIcons.pc_error,
+                          size: 100,
+                          color: isDarkMode
+                              ? ColorStyle.accentGreyLight
+                              : ColorStyle.accentGrey,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'AR View is not supported on Web.\nPlease use a mobile device',
+                          style: Style().infoFont.copyWith(
+                              color: isDarkMode
+                                  ? ColorStyle.accentGreyLight
+                                  : ColorStyle.accentGrey),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ))
+          else
           ARView(
             onARViewCreated: _onARViewCreated,
             planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
