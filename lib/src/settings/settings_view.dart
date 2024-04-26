@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../cart/cart_model.dart';
 import '../helper/blyssIcons_icons.dart';
 import '../helper/colors.dart';
@@ -66,35 +67,40 @@ class SettingsView extends StatelessWidget {
     );
   }
 
-
-void _showResetConfirmationDialog(BuildContext context) {
-  final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Reset App', style: Style().dialogTitleFont),
-        content: Text('This will reset all variables. Are you sure you want to continue?', style: Style().dialogTextFont),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Cancel',style: Style().buttonFont.copyWith(color: ColorStyle.accentRed)),
-            onPressed: () {
-              Navigator.of(context).pop(); // Close the dialog
-            },
-          ),
-          TextButton(
-            child:  Text('Confirm', style: Style().buttonFont.copyWith(color: isDarkMode? ColorStyle.white: ColorStyle.black)),
-            onPressed: () {
-              // Perform the reset operation
-              controller.resetOnboarding();
-              controller.resetThemeMode();
-              CartModel().clearCart();
-              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+  void _showResetConfirmationDialog(BuildContext context) {
+    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Reset App', style: Style().dialogTitleFont),
+          content: Text(
+              'This will reset all variables. Are you sure you want to continue?',
+              style: Style().dialogTextFont),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel',
+                  style:
+                      Style().buttonFont.copyWith(color: ColorStyle.accentRed)),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+            TextButton(
+              child: Text('Confirm',
+                  style: Style().buttonFont.copyWith(
+                      color: isDarkMode ? ColorStyle.white : ColorStyle.black)),
+              onPressed: () {
+                // Perform the reset operation
+                controller.resetOnboarding();
+                controller.resetThemeMode();
+                CartModel().clearCart();
+                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

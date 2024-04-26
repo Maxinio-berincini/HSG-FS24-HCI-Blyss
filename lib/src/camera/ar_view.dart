@@ -9,10 +9,11 @@ import 'package:ar_flutter_plugin_flutterflow/models/ar_anchor.dart';
 import 'package:ar_flutter_plugin_flutterflow/models/ar_hittest_result.dart';
 import 'package:ar_flutter_plugin_flutterflow/models/ar_node.dart';
 import 'package:ar_flutter_plugin_flutterflow/widgets/ar_view.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
-import 'package:flutter/foundation.dart' show kIsWeb;
+
 import '../catalog/product.dart';
 import '../helper/blyssIcons_icons.dart';
 import '../helper/colors.dart';
@@ -42,7 +43,6 @@ class _ARModelViewerState extends State<ARModelViewer> {
     arSessionManager!.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -52,40 +52,40 @@ class _ARModelViewerState extends State<ARModelViewer> {
     return Scaffold(
       body: Stack(
         children: [
-          if(kIsWeb)
+          if (kIsWeb)
             Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          BlyssIcons.pc_error,
-                          size: 100,
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      BlyssIcons.pc_error,
+                      size: 100,
+                      color: isDarkMode
+                          ? ColorStyle.accentGreyLight
+                          : ColorStyle.accentGrey,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'AR View is not supported on Web.\nPlease use a mobile device',
+                      style: Style().infoFont.copyWith(
                           color: isDarkMode
                               ? ColorStyle.accentGreyLight
-                              : ColorStyle.accentGrey,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'AR View is not supported on Web.\nPlease use a mobile device',
-                          style: Style().infoFont.copyWith(
-                              color: isDarkMode
-                                  ? ColorStyle.accentGreyLight
-                                  : ColorStyle.accentGrey),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                              : ColorStyle.accentGrey),
+                      textAlign: TextAlign.center,
                     ),
-                  ),
-                ))
+                  ],
+                ),
+              ),
+            ))
           else
-          ARView(
-            onARViewCreated: _onARViewCreated,
-            planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
-          ),
+            ARView(
+              onARViewCreated: _onARViewCreated,
+              planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
+            ),
           Positioned(
             top: 0,
             left: 8,
@@ -102,7 +102,8 @@ class _ARModelViewerState extends State<ARModelViewer> {
     );
   }
 
-  void _onARViewCreated(ARSessionManager arSessionManager,
+  void _onARViewCreated(
+      ARSessionManager arSessionManager,
       ARObjectManager arObjectManager,
       ARAnchorManager arAnchorManager,
       ARLocationManager arLocationManager) {
@@ -111,26 +112,25 @@ class _ARModelViewerState extends State<ARModelViewer> {
     this.arAnchorManager = arAnchorManager;
 
     this.arSessionManager!.onInitialize(
-      showFeaturePoints: false,
-      showPlanes: true,
-      customPlaneTexturePath: "Images/triangle.png",
-      showWorldOrigin: false,
-      handlePans: true,
-      handleRotation: true,
-    );
+          showFeaturePoints: false,
+          showPlanes: true,
+          customPlaneTexturePath: "Images/triangle.png",
+          showWorldOrigin: false,
+          handlePans: true,
+          handleRotation: true,
+        );
     this.arObjectManager!.onInitialize();
 
     this.arSessionManager!.onPlaneOrPointTap = onPlaneOrPointTapped;
-
   }
 
   Future<void> onPlaneOrPointTapped(
       List<ARHitTestResult> hitTestResults) async {
     var singleHitTestResult = hitTestResults.firstWhere(
-            (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
-    if (singleHitTestResult != null && nodes.length < 1){
+        (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
+    if (singleHitTestResult != null && nodes.length < 1) {
       var newAnchor =
-      ARPlaneAnchor(transformation: singleHitTestResult.worldTransform);
+          ARPlaneAnchor(transformation: singleHitTestResult.worldTransform);
       bool? didAddAnchor = await this.arAnchorManager!.addAnchor(newAnchor);
       if (didAddAnchor!) {
         this.anchors.add(newAnchor);
@@ -138,11 +138,13 @@ class _ARModelViewerState extends State<ARModelViewer> {
         var newNode = ARNode(
             type: NodeType.localGLTF2,
             uri: widget.product.objPath,
-            scale: vector.Vector3(widget.product.objScale, widget.product.objScale, widget.product.objScale),
+            scale: vector.Vector3(widget.product.objScale,
+                widget.product.objScale, widget.product.objScale),
             position: vector.Vector3(0.0, 0.0, 0.0),
             rotation: vector.Vector4(1.0, 0.0, 0.0, 0.0));
-        bool? didAddNodeToAnchor =
-        await this.arObjectManager!.addNode(newNode, planeAnchor: newAnchor);
+        bool? didAddNodeToAnchor = await this
+            .arObjectManager!
+            .addNode(newNode, planeAnchor: newAnchor);
         if (didAddNodeToAnchor!) {
           this.nodes.add(newNode);
         } else {
@@ -153,6 +155,4 @@ class _ARModelViewerState extends State<ARModelViewer> {
       }
     }
   }
-
-
 }

@@ -23,8 +23,7 @@ class SettingsService {
     if (storedThemeMode == null) return ThemeMode.system;
 
     // Convert the stored string theme mode back into a ThemeMode
-    return ThemeMode.values.firstWhere(
-            (e) => e.toString() == storedThemeMode,
+    return ThemeMode.values.firstWhere((e) => e.toString() == storedThemeMode,
         orElse: () => ThemeMode.system);
   }
 

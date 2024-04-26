@@ -58,7 +58,6 @@ class _MyAppState extends State<MyApp> {
           child: MaterialApp(
               restorationScopeId: 'app',
               debugShowCheckedModeBanner: false,
-
               localizationsDelegates: const [
                 AppLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,
@@ -68,10 +67,8 @@ class _MyAppState extends State<MyApp> {
               supportedLocales: const [
                 Locale('en', ''), // English, no country code
               ],
-
               onGenerateTitle: (BuildContext context) =>
                   AppLocalizations.of(context)!.appTitle,
-
               theme: ThemeData(
                 elevatedButtonTheme: ElevatedButtonThemeData(
                   style: ElevatedButton.styleFrom(
@@ -132,8 +129,7 @@ class _MyAppState extends State<MyApp> {
               ),
               themeMode: widget.settingsController.themeMode,
 
-              // Define a function to handle named routes in order to support
-              // Flutter web url navigation and deep linking.
+              // Set the initial route based on the user's onboarding status
               initialRoute: initialRoute,
               routes: {
                 GettingStartedView.routeName: (context) =>
@@ -148,7 +144,9 @@ class _MyAppState extends State<MyApp> {
                 SettingsView.routeName: (context) =>
                     SettingsView(controller: widget.settingsController),
                 QRScanner.routeName: (context) => const QRScanner(),
-                ARModelViewer.routeName: (context) =>  ARModelViewer(product: ModalRoute.of(context)!.settings.arguments as Product),
+                ARModelViewer.routeName: (context) => ARModelViewer(
+                    product:
+                        ModalRoute.of(context)!.settings.arguments as Product),
               }),
         );
       },

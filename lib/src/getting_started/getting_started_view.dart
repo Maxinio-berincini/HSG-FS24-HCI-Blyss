@@ -5,7 +5,8 @@ import '../helper/text_styles.dart';
 import '../settings/settings_controller.dart';
 
 class GettingStartedView extends StatefulWidget {
-  const GettingStartedView({Key? key, required this.controller}) : super(key: key);
+  const GettingStartedView({Key? key, required this.controller})
+      : super(key: key);
   static const routeName = '/getting-started';
   final SettingsController controller;
 
@@ -84,7 +85,9 @@ class _GettingStartedViewState extends State<GettingStartedView> {
             onPressed: _onNextButtonPressed,
             child: Text(
               'Next',
-              style: Style().buttonFont.copyWith(color: isDarkMode ? Colors.black : Colors.white),
+              style: Style()
+                  .buttonFont
+                  .copyWith(color: isDarkMode ? Colors.black : Colors.white),
             ),
           ),
           const SizedBox(height: 32),

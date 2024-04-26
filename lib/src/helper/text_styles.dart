@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Style{
+class Style {
   var productTitleFont = const TextStyle(
     fontFamily: 'Roboto',
     fontSize: 20,

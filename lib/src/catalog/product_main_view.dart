@@ -1,8 +1,7 @@
-import 'dart:ui';
-
 import 'package:blyss/src/camera/ar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../cart/cart_model.dart';
 import '../helper/blyssIcons_icons.dart';
 import '../helper/blyss_app_bar.dart';
@@ -14,6 +13,7 @@ class ProductPage extends StatefulWidget {
   final Product product;
 
   const ProductPage({super.key, required this.product});
+
   static const routeName = '/product-view';
 
   @override
@@ -30,16 +30,14 @@ class _ProductPageState extends State<ProductPage> {
     super.initState();
     initialIndex = Product.findProductIndexById(widget.product.id);
     if (initialIndex == -1) {
-      initialIndex =
-      0; // Default to first product if ID not found (fallback case)
+      initialIndex = 0;
     }
     pageController = PageController(
       initialPage: initialIndex,
-      viewportFraction: 0.87, // Adjusted for better visibility of side images
+      viewportFraction: 0.87,
     );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Trigger a rebuild with the correct page dimensions
       if (mounted) {
         setState(() {});
       }
@@ -55,17 +53,17 @@ class _ProductPageState extends State<ProductPage> {
   double getScale(double currentPage, int pageIndex) {
     var delta = (currentPage - pageIndex).abs();
     if (delta < 1.0) {
-      return 1 - 0.05 * delta; // Smoother scaling transition
+      return 1 - 0.05 * delta;
     }
-    return 0.95; // Minimum scale for side images
+    return 0.95;
   }
 
   double getTextScale(double currentPage, int pageIndex) {
     var delta = (currentPage - pageIndex).abs();
     if (delta < 1.0) {
-      return 1 - 0.4 * delta; // Smoother scaling transition
+      return 1 - 0.4 * delta;
     }
-    return 0.6; // Minimum scale for side images
+    return 0.6;
   }
 
   @override
@@ -76,7 +74,7 @@ class _ProductPageState extends State<ProductPage> {
       body: PageView.builder(
         controller: pageController,
         itemBuilder: (context, index) {
-          final realIndex = index % products.length; // Infinite loop logic
+          final realIndex = index % products.length;
           final product = products[realIndex];
           return Stack(
             children: <Widget>[
@@ -124,7 +122,6 @@ class _ProductPageState extends State<ProductPage> {
                             color: ColorStyle.black,
                           ),
                           onPressed: () {
-                            print("Open AR Model Viewer");
                             Navigator.pushNamed(
                               context,
                               ARModelViewer.routeName,
@@ -150,8 +147,8 @@ class _ProductPageState extends State<ProductPage> {
                 ),
               ),
               Positioned(
-                top: MediaQuery.of(context).size.height * 0.55, // Adjust based on image height
-                bottom: 0, // Adjust based on image height
+                top: MediaQuery.of(context).size.height * 0.55,
+                bottom: 0,
                 left: 0,
                 right: 0,
                 child: AnimatedBuilder(
@@ -164,11 +161,10 @@ class _ProductPageState extends State<ProductPage> {
                                 pageController.initialPage.toDouble(),
                             index);
                       }
-                      // Apply the scaling transformation to the text section
+
                       return Transform.scale(
                         scale: scale,
                         alignment: Alignment.topCenter,
-                        // Keep the text anchored to the top when scaling
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(4, 0, 4, 0),
                           child: child,
@@ -176,7 +172,7 @@ class _ProductPageState extends State<ProductPage> {
                       );
                     },
                     child: DraggableScrollableSheet(
-                      initialChildSize: 1, // Adjust this value as needed
+                      initialChildSize: 1,
                       minChildSize: 1,
                       maxChildSize: 1,
                       builder: (BuildContext context,
@@ -187,10 +183,9 @@ class _ProductPageState extends State<ProductPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: Text(
@@ -201,29 +196,30 @@ class _ProductPageState extends State<ProductPage> {
                                     IconButton(
                                       icon: const Icon(BlyssIcons.product_link),
                                       onPressed: () {
-                                        // Implement your share functionality here
+                                        // TODO: Implement product link
                                       },
                                     ),
                                     IconButton(
                                       icon: const Icon(BlyssIcons.cart),
                                       onPressed: () {
-                                        Provider.of<CartModel>(context, listen: false).addItem(product.id);
+                                        Provider.of<CartModel>(context,
+                                                listen: false)
+                                            .addItem(product.id);
                                       },
                                     ),
                                   ],
                                 ),
                                 Text(
                                   product.category,
-                                  style: Style()
-                                      .productCategoryFont
-                                      .copyWith(color: isDarkMode? ColorStyle.accentGreyLight: ColorStyle.accentGrey),
+                                  style: Style().productCategoryFont.copyWith(
+                                      color: isDarkMode
+                                          ? ColorStyle.accentGreyLight
+                                          : ColorStyle.accentGrey),
                                 ),
                                 const SizedBox(height: 16),
                                 Text(
                                   product.description,
-                                  style: Style()
-                                      .productDescriptionFont
-                                      ,
+                                  style: Style().productDescriptionFont,
                                 ),
                               ],
                             ),

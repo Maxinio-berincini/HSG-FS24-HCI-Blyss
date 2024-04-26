@@ -1,15 +1,17 @@
+import 'dart:io';
+
 import 'package:blyss/src/helper/blyssIcons_icons.dart';
 import 'package:blyss/src/helper/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'dart:io';
 
 import '../catalog/product.dart';
 import '../catalog/product_main_view.dart';
 
 class QRScanner extends StatefulWidget {
   const QRScanner({super.key});
+
   static const routeName = '/qr-scanner';
 
   @override
@@ -34,7 +36,7 @@ class _QRScannerState extends State<QRScanner> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.light,
     ));
     return Scaffold(
       body: Stack(
@@ -56,10 +58,11 @@ class _QRScannerState extends State<QRScanner> {
     );
   }
 
-
-
   Widget _buildQrView(BuildContext context) {
-    var scanArea = (MediaQuery.of(context).size.width < 400 || MediaQuery.of(context).size.height < 400) ? 150.0 : 300.0;
+    var scanArea = (MediaQuery.of(context).size.width < 400 ||
+            MediaQuery.of(context).size.height < 400)
+        ? 150.0
+        : 300.0;
     return QRView(
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
@@ -68,8 +71,7 @@ class _QRScannerState extends State<QRScanner> {
           borderRadius: 10,
           borderLength: 30,
           borderWidth: 10,
-          cutOutSize: scanArea
-      ),
+          cutOutSize: scanArea),
       onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
     );
   }

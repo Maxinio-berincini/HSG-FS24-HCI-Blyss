@@ -11,7 +11,6 @@ class CartModel with ChangeNotifier {
   void addItem(int productId) {
     if (_items.containsKey(productId)) {
       _items[productId] = _items[productId]! + 1;
-      print('Incremented item quantity: $productId');
     } else {
       _items[productId] = 1;
     }
@@ -53,7 +52,6 @@ class CartModel with ChangeNotifier {
     saveCartToPreferences();
   }
 
-
   int get totalItems => _items.values
       .fold(0, (previousValue, element) => previousValue + element);
 
@@ -62,14 +60,16 @@ class CartModel with ChangeNotifier {
     String? cartItemsString = prefs.getString('cartItems');
     if (cartItemsString != null) {
       Map<String, dynamic> jsonMap = json.decode(cartItemsString);
-      _items = jsonMap.map((key, value) => MapEntry(int.parse(key), value as int));
+      _items =
+          jsonMap.map((key, value) => MapEntry(int.parse(key), value as int));
     }
     notifyListeners();
   }
 
   Future<void> saveCartToPreferences() async {
     final prefs = await SharedPreferences.getInstance();
-    Map<String, int> stringKeyMap = _items.map((key, value) => MapEntry(key.toString(), value));
+    Map<String, int> stringKeyMap =
+        _items.map((key, value) => MapEntry(key.toString(), value));
     await prefs.setString('cartItems', json.encode(stringKeyMap));
   }
 }
