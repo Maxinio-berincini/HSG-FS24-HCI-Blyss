@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../cart/cart_model.dart';
+import '../getting_started/getting_started_view.dart';
 import '../helper/blyssIcons_icons.dart';
 import '../helper/colors.dart';
 import '../helper/text_styles.dart';
 import 'settings_controller.dart';
 
-class SettingsView extends StatelessWidget {
-  const SettingsView({super.key, required this.controller});
 
+class SettingsView extends StatefulWidget {
+  const SettingsView({super.key, required this.controller});
+  final SettingsController controller;
   static const routeName = '/settings';
 
-  final SettingsController controller;
+  @override
+  State<SettingsView> createState() => _SettingsViewState();
+}
+
+class _SettingsViewState extends State<SettingsView> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +40,8 @@ class SettingsView extends StatelessWidget {
               title: const Text('Theme'),
               trailing: DropdownButtonHideUnderline(
                 child: DropdownButton<ThemeMode>(
-                  value: controller.themeMode,
-                  onChanged: controller.updateThemeMode,
+                  value: widget.controller.themeMode,
+                  onChanged: widget.controller.updateThemeMode,
                   items: const [
                     DropdownMenuItem(
                       value: ThemeMode.system,
@@ -92,10 +100,15 @@ class SettingsView extends StatelessWidget {
                       color: isDarkMode ? ColorStyle.white : ColorStyle.black)),
               onPressed: () {
                 // Perform the reset operation
-                controller.resetOnboarding();
-                controller.resetThemeMode();
+                widget.controller.resetOnboarding();
+                widget.controller.resetThemeMode();
                 CartModel().clearCart();
-                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                if (kIsWeb) {
+                    Navigator.popAndPushNamed(
+                        context, GettingStartedView.routeName);
+                }else {
+                  SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                }
               },
             ),
           ],
