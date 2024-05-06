@@ -38,6 +38,7 @@ class _ARModelViewerState extends State<ARModelViewer> {
   ARAnchorManager? arAnchorManager;
 
   bool showPlanes = true;
+  bool isLoading = false;
 
   List<ARNode> nodes = [];
   List<ARAnchor> anchors = [];
@@ -113,6 +114,15 @@ class _ARModelViewerState extends State<ARModelViewer> {
               ),
             ),
           ),
+
+          if (isLoading)
+            Positioned(
+              child: Container(
+                alignment: Alignment.center,
+                color: ColorStyle.black.withOpacity(0.5),
+                child: CircularProgressIndicator(color: ColorStyle.white),
+              ),
+            ),
         ],
       ),
     );
@@ -143,12 +153,24 @@ class _ARModelViewerState extends State<ARModelViewer> {
 
   Future<void> onPlaneOrPointTapped(
       List<ARHitTestResult> hitTestResults) async {
+
+    if (isLoading || nodes.isNotEmpty) {
+      // Prevent adding new nodes if one is already loading or placed
+      return;
+    }
+
     var singleHitTestResult = hitTestResults.firstWhere(
         (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
+
     if (singleHitTestResult != null && nodes.length < 1) {
+      setState(() {
+        isLoading = true; // Start loading
+      });
+
       var newAnchor =
           ARPlaneAnchor(transformation: singleHitTestResult.worldTransform);
       bool? didAddAnchor = await this.arAnchorManager!.addAnchor(newAnchor);
+
       if (didAddAnchor!) {
         this.anchors.add(newAnchor);
         // Add note to anchor
@@ -169,7 +191,11 @@ class _ARModelViewerState extends State<ARModelViewer> {
         }
       } else {
         this.arSessionManager!.onError!("Adding Anchor failed");
+
       }
     }
+    setState(() {
+      isLoading = false; // Stop loading
+    });
   }
 }
