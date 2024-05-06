@@ -17,6 +17,14 @@ Willkommen bei **Blyss**, der revolutionären Shopping-App, die deine Art zu sho
 
 Starte jetzt mit Blyss und transformiere dein Einkaufserlebnis: [Lade Die Blyss APK jetzt herunter!](https://github.com/Maxinio-berincini/HSG-FS24-HCI-Blyss/raw/apk/blyss.apk)
 
+## Jetzt Blyss im Web anschauen!
+
+Schaue dir hier eine exklusive Preview der Blyss App ganz einfach Online an: [Blyss Web Preview](https://maxinio-berincini.github.io/HSG-FS24-HCI-Blyss)
+
+## Velvet Vault x Blyss
+
+Entdecke unsere neuste Kooperation mit der Marke Velvet Vault und tauche in eine Welt neuer Produkte ein: [Velvet Vault x Blyss Katalog herunterladen](https://github.com/Maxinio-berincini/HSG-FS24-HCI-Blyss/raw/docs/Velvet%20Vault%20x%20Blyss.pdf)
+
 ## Aufbau der App
 
 Die Struktur von Blyss basiert auf einer Mischung aus automatisch generierten Dateien und handgeschriebenem Code, der primär in den Verzeichnissen `lib` und `assets` organisiert ist.
