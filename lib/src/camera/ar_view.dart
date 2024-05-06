@@ -114,7 +114,6 @@ class _ARModelViewerState extends State<ARModelViewer> {
               ),
             ),
           ),
-
           if (isLoading)
             Positioned(
               child: Container(
@@ -153,7 +152,6 @@ class _ARModelViewerState extends State<ARModelViewer> {
 
   Future<void> onPlaneOrPointTapped(
       List<ARHitTestResult> hitTestResults) async {
-
     if (isLoading || nodes.isNotEmpty) {
       // Prevent adding new nodes if one is already loading or placed
       return;
@@ -191,7 +189,6 @@ class _ARModelViewerState extends State<ARModelViewer> {
         }
       } else {
         this.arSessionManager!.onError!("Adding Anchor failed");
-
       }
     }
     setState(() {

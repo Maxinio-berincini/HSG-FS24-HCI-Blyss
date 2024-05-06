@@ -1,6 +1,6 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../cart/cart_model.dart';
 import '../getting_started/getting_started_view.dart';
@@ -9,9 +9,9 @@ import '../helper/colors.dart';
 import '../helper/text_styles.dart';
 import 'settings_controller.dart';
 
-
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key, required this.controller});
+
   final SettingsController controller;
   static const routeName = '/settings';
 
@@ -20,17 +20,15 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-
   final MaterialStateProperty<Icon?> thumbIcon =
-  MaterialStateProperty.resolveWith<Icon?>(
-        (Set<MaterialState> states) {
+      MaterialStateProperty.resolveWith<Icon?>(
+    (Set<MaterialState> states) {
       if (states.contains(MaterialState.selected)) {
         return const Icon(Icons.check, color: ColorStyle.white);
       }
-      return const Icon(Icons.close,  color: ColorStyle.white);
+      return const Icon(Icons.close, color: ColorStyle.white);
     },
   );
-
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +79,7 @@ class _SettingsViewState extends State<SettingsView> {
             ListTile(
               title: const Text('Show Plane Indicators in AR'),
               trailing: Switch(
-                thumbIcon:  thumbIcon,
+                thumbIcon: thumbIcon,
                 value: widget.controller.planeIndicatorsEnabled,
                 onChanged: widget.controller.updatePlaneIndicatorsEnabled,
               ),
@@ -122,9 +120,9 @@ class _SettingsViewState extends State<SettingsView> {
                 widget.controller.resetThemeMode();
                 CartModel().clearCart();
                 if (kIsWeb) {
-                    Navigator.popAndPushNamed(
-                        context, GettingStartedView.routeName);
-                }else {
+                  Navigator.popAndPushNamed(
+                      context, GettingStartedView.routeName);
+                } else {
                   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                 }
               },

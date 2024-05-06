@@ -99,7 +99,8 @@ class _MyAppState extends State<MyApp> {
                 ),
                 switchTheme: SwitchThemeData(
                   thumbColor: MaterialStateProperty.all(ColorStyle.accentGrey),
-                  trackColor: MaterialStateProperty.all(ColorStyle.accentGreyLight),
+                  trackColor:
+                      MaterialStateProperty.all(ColorStyle.accentGreyLight),
                 ),
               ),
               darkTheme: ThemeData.dark().copyWith(
@@ -131,7 +132,8 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
                 switchTheme: SwitchThemeData(
-                  thumbColor: MaterialStateProperty.all(ColorStyle.accentGreyLight),
+                  thumbColor:
+                      MaterialStateProperty.all(ColorStyle.accentGreyLight),
                   trackColor: MaterialStateProperty.all(ColorStyle.accentGrey),
                 ),
               ),

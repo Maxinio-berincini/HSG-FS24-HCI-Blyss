@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+
 import 'settings_controller.dart';
 import 'settings_service.dart';
 

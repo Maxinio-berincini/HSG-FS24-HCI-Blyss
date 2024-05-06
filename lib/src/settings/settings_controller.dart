@@ -15,6 +15,7 @@ class SettingsController with ChangeNotifier {
   late bool _planeIndicatorsEnabled;
 
   ThemeMode get themeMode => _themeMode;
+
   bool get planeIndicatorsEnabled => _planeIndicatorsEnabled;
 
   /// Load the user's settings from the SettingsService. It may load from a
@@ -22,7 +23,8 @@ class SettingsController with ChangeNotifier {
   /// settings from the service.
   Future<void> loadSettings() async {
     _themeMode = await _settingsService.themeMode();
-    _planeIndicatorsEnabled = await _settingsService.arePlaneIndicatorsEnabled();
+    _planeIndicatorsEnabled =
+        await _settingsService.arePlaneIndicatorsEnabled();
     notifyListeners();
   }
 
