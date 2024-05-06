@@ -103,6 +103,14 @@ class _ARModelViewerState extends State<ARModelViewer> {
               onARViewCreated: _onARViewCreated,
               planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
             ),
+          if (isLoading)
+            Positioned(
+              child: Container(
+                alignment: Alignment.center,
+                color: ColorStyle.black.withOpacity(0.7),
+                child: CircularProgressIndicator(color: ColorStyle.white),
+              ),
+            ),
           Positioned(
             top: 0,
             left: 8,
@@ -114,14 +122,6 @@ class _ARModelViewerState extends State<ARModelViewer> {
               ),
             ),
           ),
-          if (isLoading)
-            Positioned(
-              child: Container(
-                alignment: Alignment.center,
-                color: ColorStyle.black.withOpacity(0.5),
-                child: CircularProgressIndicator(color: ColorStyle.white),
-              ),
-            ),
         ],
       ),
     );
