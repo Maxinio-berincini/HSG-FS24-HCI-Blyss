@@ -44,7 +44,7 @@ final List<Product> products = [
     price: 420.0,
     rating: 4.5,
     imagePath: 'assets/images/products/gucci_seal_teddy.jpg',
-    objPath: 'assets/models/gucci_seal_teddy/gucci_seal_teddy.gltf',
+    objPath: 'assets/models/gucci_seal_teddy/scene.gltf',
     objScale: 0.5,
   ),
   Product(
