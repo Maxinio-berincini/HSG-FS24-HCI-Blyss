@@ -52,10 +52,8 @@ flutter:
     - assets/images/getting_started/
     - assets/images/products/
     - assets/models/
-    - assets/models/Chicken_01/
     - assets/models/gucci_seal_teddy/
     - assets/models/deluxe_energy_elixir/
-    - assets/models/chair/
     - assets/models/premium_ball_valve/
     - assets/models/supreme_porsche_model/
 
