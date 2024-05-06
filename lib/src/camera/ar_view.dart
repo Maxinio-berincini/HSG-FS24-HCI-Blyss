@@ -18,6 +18,8 @@ import '../catalog/product.dart';
 import '../helper/blyssIcons_icons.dart';
 import '../helper/colors.dart';
 import '../helper/text_styles.dart';
+import '../settings/service_locator.dart';
+import '../settings/settings_controller.dart';
 
 class ARModelViewer extends StatefulWidget {
   final Product product;
@@ -30,12 +32,26 @@ class ARModelViewer extends StatefulWidget {
 }
 
 class _ARModelViewerState extends State<ARModelViewer> {
+  SettingsController? settingsController;
   ARSessionManager? arSessionManager;
   ARObjectManager? arObjectManager;
   ARAnchorManager? arAnchorManager;
 
+  bool showPlanes = true;
+
   List<ARNode> nodes = [];
   List<ARAnchor> anchors = [];
+
+  @override
+  void initState() {
+    super.initState();
+    settingsController = locator<SettingsController>();
+    settingsController?.loadSettings().then((_) {
+      setState(() {
+        showPlanes = settingsController!.planeIndicatorsEnabled;
+      });
+    });
+  }
 
   @override
   void dispose() {
@@ -113,8 +129,9 @@ class _ARModelViewerState extends State<ARModelViewer> {
 
     this.arSessionManager!.onInitialize(
           showFeaturePoints: false,
-          showPlanes: true,
+          showPlanes: showPlanes,
           customPlaneTexturePath: "Images/triangle.png",
+          showAnimatedGuide: true,
           showWorldOrigin: false,
           handlePans: true,
           handleRotation: true,

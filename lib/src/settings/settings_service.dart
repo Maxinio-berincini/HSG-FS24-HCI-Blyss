@@ -13,6 +13,9 @@ class SettingsService {
   // Key for storing the onboarding status
   final String onboardingCompleteKey = 'onboarding_complete';
 
+  // Key for storing the plane indicators status
+  final String planeIndicatorsKey = 'plane_indicators';
+
   /// Loads the User's preferred ThemeMode from local or remote storage.
   Future<ThemeMode> themeMode() async {
     final prefs = await SharedPreferences.getInstance();
@@ -45,5 +48,17 @@ class SettingsService {
   Future<void> setOnboardingComplete(bool isComplete) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(onboardingCompleteKey, isComplete);
+  }
+
+  // Method to check if plane indicators should be shown
+  Future<bool> arePlaneIndicatorsEnabled() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(planeIndicatorsKey) ?? true; // Default to true
+  }
+
+  // Method to update plane indicators status
+  Future<void> setPlaneIndicatorsEnabled(bool isEnabled) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(planeIndicatorsKey, isEnabled);
   }
 }

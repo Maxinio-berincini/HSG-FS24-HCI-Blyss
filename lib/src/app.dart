@@ -97,6 +97,10 @@ class _MyAppState extends State<MyApp> {
                     borderSide: BorderSide(color: ColorStyle.accentGrey),
                   ),
                 ),
+                switchTheme: SwitchThemeData(
+                  thumbColor: MaterialStateProperty.all(ColorStyle.accentGrey),
+                  trackColor: MaterialStateProperty.all(ColorStyle.accentGreyLight),
+                ),
               ),
               darkTheme: ThemeData.dark().copyWith(
                 elevatedButtonTheme: ElevatedButtonThemeData(
@@ -125,6 +129,10 @@ class _MyAppState extends State<MyApp> {
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: ColorStyle.accentGreyLight),
                   ),
+                ),
+                switchTheme: SwitchThemeData(
+                  thumbColor: MaterialStateProperty.all(ColorStyle.accentGreyLight),
+                  trackColor: MaterialStateProperty.all(ColorStyle.accentGrey),
                 ),
               ),
               themeMode: widget.settingsController.themeMode,

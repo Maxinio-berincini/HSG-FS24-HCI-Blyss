@@ -12,14 +12,17 @@ class SettingsController with ChangeNotifier {
 
   final SettingsService _settingsService;
   late ThemeMode _themeMode;
+  late bool _planeIndicatorsEnabled;
 
   ThemeMode get themeMode => _themeMode;
+  bool get planeIndicatorsEnabled => _planeIndicatorsEnabled;
 
   /// Load the user's settings from the SettingsService. It may load from a
   /// local database or the internet. The controller only knows it can load the
   /// settings from the service.
   Future<void> loadSettings() async {
     _themeMode = await _settingsService.themeMode();
+    _planeIndicatorsEnabled = await _settingsService.arePlaneIndicatorsEnabled();
     notifyListeners();
   }
 
@@ -53,5 +56,13 @@ class SettingsController with ChangeNotifier {
   Future<void> resetOnboarding() async {
     await _settingsService.setOnboardingComplete(false);
     notifyListeners();
+  }
+
+  // Update the plane indicators setting
+  Future<void> updatePlaneIndicatorsEnabled(bool isEnabled) async {
+    if (isEnabled == _planeIndicatorsEnabled) return;
+    _planeIndicatorsEnabled = isEnabled;
+    notifyListeners();
+    await _settingsService.setPlaneIndicatorsEnabled(isEnabled);
   }
 }

@@ -21,6 +21,16 @@ class SettingsView extends StatefulWidget {
 
 class _SettingsViewState extends State<SettingsView> {
 
+  final MaterialStateProperty<Icon?> thumbIcon =
+  MaterialStateProperty.resolveWith<Icon?>(
+        (Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
+        return const Icon(Icons.check, color: ColorStyle.white);
+      }
+      return const Icon(Icons.close,  color: ColorStyle.white);
+    },
+  );
+
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +78,15 @@ class _SettingsViewState extends State<SettingsView> {
               ),
             ),
             const Divider(),
-            // Add more settings options here
+            ListTile(
+              title: const Text('Show Plane Indicators in AR'),
+              trailing: Switch(
+                thumbIcon:  thumbIcon,
+                value: widget.controller.planeIndicatorsEnabled,
+                onChanged: widget.controller.updatePlaneIndicatorsEnabled,
+              ),
+            ),
+            const Divider(),
           ],
         ),
       ),
